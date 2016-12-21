@@ -4,8 +4,6 @@ import Bazaar from 'bazaar-client'
 const packageInfo = require('./package.json')
 const bazaarInfo = require('./bazaar.json')
 
-const featureName = 'feature_name'
-
 const DD = ReactNative.NativeModules.DDBindings
 const eventID = ReactNative.Platform.select({
   ios: () => DD.currentEvent.EventId,
@@ -20,7 +18,7 @@ const ScreenView = ReactNative.Platform.select({
 class HomeView extends Component {
   constructor() {
     super()
-    this.api = new Bazaar.Client(DD, featureName, eventID)
+    this.api = new Bazaar.Client(DD, packageInfo.name, eventID)
     this.state = { sampleItems: [] }
   }
 
@@ -112,6 +110,7 @@ const styles = ReactNative.StyleSheet.create({
   },
   h2: {
     fontSize: 16,
+    fontWeight: '600',
     textAlign: 'left',
     marginVertical: 2,
   },
