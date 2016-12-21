@@ -1,6 +1,7 @@
 var React = require('react-native');
 var { AppRegistry } = React;
-var CardView = require('./cardview.js')
+import HomeView from './home-view.js'
 
+console.error = () => {}
 console.disableYellowBox = true;
-AppRegistry.registerComponent('CardView', () => CardView.default);
+AppRegistry.registerComponent('AppStoreSample', () => HomeView);

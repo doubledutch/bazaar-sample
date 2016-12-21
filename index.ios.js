@@ -1,7 +1,7 @@
 var React = require('react-native');
 var { AppRegistry } = React;
-import SampleView from './sample.js'
+import HomeView from './home-view.js'
 
 console.error = () => {}
 console.disableYellowBox = true;
-AppRegistry.registerComponent('AppStoreSample', () => SampleView);
+AppRegistry.registerComponent('AppStoreSample', () => HomeView);

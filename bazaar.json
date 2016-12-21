@@ -1,0 +1,20 @@
+{
+  "name": "sample-bazaar-feature",
+  "description": "Description for wazoo",
+  "collections": [
+    {
+      "description": "test",
+      "globalReadAccess": true,
+      "globalWriteAccess": false,
+      "name": "first_collection",
+      "userWriteAccess": true
+    },
+    {
+      "description": "test",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "name": "second_collection",
+      "userWriteAccess": true
+    }
+  ]
+}
