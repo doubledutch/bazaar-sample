@@ -4,13 +4,23 @@ import Bazaar from 'bazaar-client'
 const packageInfo = require('./package.json')
 const bazaarInfo = require('./bazaar.json')
 
-const DD = ReactNative.NativeModules.DDBindings
-const eventID = ReactNative.Platform.select({
+var DD = ReactNative.NativeModules.DDBindings
+const isSandboxed = !(DD && DD.currentEvent)
+
+if (isSandboxed) {
+  // We are not running an a DD environment. Load the shim
+  DD = {
+    setTitle: () => {},
+    requestAccessToken: (callback) => callback(null, 'fake-access-token')
+  }
+}
+
+const eventID = isSandboxed ? 'sample-event-id' : ReactNative.Platform.select({
   ios: () => DD.currentEvent.EventId,
   android: () => JSON.parse(DD.currentEvent).EventId
 })();
 
-const ScreenView = ReactNative.Platform.select({
+const ScreenView = isSandboxed ? ReactNative.View : ReactNative.Platform.select({
   ios: () => Bazaar.View,
   android: () => ReactNative.View,
 })();
@@ -18,7 +28,13 @@ const ScreenView = ReactNative.Platform.select({
 class HomeView extends Component {
   constructor() {
     super()
-    this.api = new Bazaar.Client(DD, packageInfo.name, eventID)
+    const options = {
+      isSandboxed: isSandboxed,
+      featureName: packageInfo.name,
+      eventID: eventID,
+      horizonHost: isSandboxed ? 'localhost:7171' : 'bazaar.doubledutch.me'
+    }
+    this.api = new Bazaar.Client(DD, options)
     this.state = { sampleItems: [] }
   }
 
@@ -26,11 +42,13 @@ class HomeView extends Component {
     var self = this
 
     this.api.connect().then((user) => {
+      
       // TODO: query from a collection on load
-      // this.api.fetchUserDocumentsInCollection(collection = 'second_collection', query = null, watch = true).subscribe((results) => {
-      //   this.setState({ sampleItems: results })
-      // })
+      this.api.fetchUserDocumentsInCollection(collection = 'second_collection', query = null, watch = true).subscribe((results) => {
+        this.setState({ sampleItems: results })
+      })
     }).catch((err) => {
+      debugger
       Alert.alert('Error: ' + err)
     })
 
@@ -51,10 +69,11 @@ class HomeView extends Component {
   }
 
   render() {
-    const ids = 'Sample Items: ' + (this.state.sampleItems || []).map((x) => x.name).join(', ')
-
+    const items = (this.state.sampleItems || [])
+    const ids = 'Sample Items: ' + items.map((x) => x.name).join(', ')
+    const idStyle = items.length ? null : { height: 0 }
     return (
-      <ScreenView title="" style={{ flex: 1 }}>
+      <ScreenView title="" style={{ flex: 1}}>
         <ScrollView style={ styles.container }>
           <Image style={ styles.headerImage } resizeMode="contain" source={{ uri: 'https://doubledutch.me/wp-content/uploads/2016/04/doubledutch-logo-300.png' }} />
           <Text style={ styles.welcome }>{packageInfo.name} ({packageInfo.version})</Text>
@@ -68,13 +87,13 @@ class HomeView extends Component {
             </View>
           ))}
           <Text style={ styles.h1 }>Data Interactions</Text>
-          <View style={{ opacity: 0.25 }}>
+          <View style={{ opacity: 1 }}>
             <Text>TODO: Check the code for samples</Text>
-            <Text style={{ height: 0 }}>{ids}</Text>
-            <TouchableOpacity disabled={true} onPress={this.insertSample.bind(this)} style={{ padding: 5, backgroundColor: 'blue', margin: 10 }}>
+            <Text style={idStyle}>{ids}</Text>
+            <TouchableOpacity onPress={this.insertSample.bind(this)} style={{ padding: 5, backgroundColor: 'blue', margin: 10 }}>
               <Text style={{ color: 'white' }}>Insert item into list</Text>
             </TouchableOpacity>
-            <TouchableOpacity disabled={true} onPress={this.deleteSample.bind(this)} style={{ padding: 5, backgroundColor: 'red', margin: 10 }}>
+            <TouchableOpacity onPress={this.deleteSample.bind(this)} style={{ padding: 5, backgroundColor: 'red', margin: 10 }}>
               <Text style={{ color: 'white' }}>Delete item list</Text>
             </TouchableOpacity>
           </View>
