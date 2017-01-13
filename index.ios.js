@@ -4,4 +4,4 @@ import HomeView from './home-view.js'
 
 console.error = () => {}
 console.disableYellowBox = true;
-AppRegistry.registerComponent('wazoo', () => HomeView);
+AppRegistry.registerComponent('bazaar_sample', () => HomeView);
