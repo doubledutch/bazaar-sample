@@ -6,9 +6,15 @@
       height: 100%;
     }
   </style>
+  <script src="https://cdn.rawgit.com/doubledutch/sdk/master/DDEventsSDK.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.1/fetch.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+  <script src="https://dd-bazaar.s3.amazonaws.com/lib/react-native-web-0.0.68.js"></script>
+  <script src="https://dd-bazaar.s3.amazonaws.com/lib/bazaar-0.40.0.js"></script>
+  <meta name="viewport" content="width=device-width">
 </head>
 <body>
-  <div id="react-root" style="width: 400px"></div>
+  <div id="react-root" style="max-width: 600px"></div>
   <script>
     window.localStorage.__proto__.prepopulateMap = function(key, hash) {
       debugger
