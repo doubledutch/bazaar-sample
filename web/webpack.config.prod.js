@@ -9,6 +9,12 @@ const prodConfig = {
 }
 Object.assign(prodConfig, devConfig)
 
+prodConfig.externals = {
+  "react" : "window.React",
+  "react-native" : "window.ReactNative",
+  "bazaar-client" : "window.Bazaar"
+}
+
 prodConfig.plugins = [
   // #FIXME: setting NODE_ENV to production will cause JS error:
   // style is undefined in react-native-tab-navigator/Tab.js: titleStyle: Text.propTypes.style

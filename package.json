@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start --port 8081",
-    "ios": "node node_modules/react-native/local-cli/cli.js run-ios",
-    "android": "node node_modules/react-native/local-cli/cli.js run-android",
+    "start": "node node_modules/dd-rn-packager/react-native/local-cli/cli.js start --port 8081",
+    "ios": "node node_modules/dd-rn-packager/react-native/local-cli/cli.js run-ios",
+    "android": "node node_modules/dd-rn-packager/react-native/local-cli/cli.js run-android",
     "web": "webpack-dev-server --port 3000 --config web/webpack.config.dev.js -d --inline --hot --colors",
     "clean-web": "rm -Rf web/static/build/",
     "build-web": "npm run clean-web && webpack --colors --display-error-details --config web/webpack.config.prod.js"

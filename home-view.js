@@ -1,33 +1,48 @@
 import React, { Component } from 'react';
-import ReactNative, { Alert, TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import ReactNative from 'react-native';
+import Update from 'react-addons-update'
+
+const { Alert, TouchableOpacity, Text, View, ScrollView, Image } = ReactNative
 import Bazaar from 'bazaar-client'
 const packageInfo = require('./package.json')
 const bazaarInfo = require('./bazaar.json')
 
 var DD = ReactNative.NativeModules.DDBindings
-const isSandboxed = !(DD && DD.currentEvent)
-
-if (isSandboxed) {
-  // We are not running an a DD environment. Load the shim
-  DD = {
-    setTitle: () => {},
-    requestAccessToken: (callback) => callback(null, 'fake-access-token')
-  }
-}
-
-const eventID = isSandboxed ? 'sample-event-id' : ReactNative.Platform.select({
-  ios: () => DD.currentEvent.EventId,
-  android: () => JSON.parse(DD.currentEvent).EventId
-})();
-
-const ScreenView = isSandboxed ? ReactNative.View : ReactNative.Platform.select({
-  ios: () => Bazaar.View,
-  android: () => ReactNative.View,
-})();
+var ScreenView = ReactNative.View
+var eventID = ''
+const isSandboxed = false//!(DD && DD.currentEvent)
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 class HomeView extends Component {
-  constructor() {
+  constructor({ ddOverride }) {
     super()
+
+    if (ddOverride) {
+      DD = ddOverride
+    }
+
+    if (!DD) {
+      // We are not running an a DD environment. Load the shim
+      DD = {
+        currentEvent: { EventId: 'sample-event-id' },
+        setTitle: () => {},
+        requestAccessToken: (callback) => { debugger; return callback(null, 'fake-access-token') }
+      }
+    }
+
+    const eventID = isSandboxed ? DD.currentEvent.EventId : ReactNative.Platform.select({
+      ios: () => DD.currentEvent.EventId,
+      android: () => JSON.parse(DD.currentEvent).EventId,
+      web: () => DD.currentEvent.EventId
+    })();
+
+    const ScreenView = isSandboxed ? ReactNative.View : ReactNative.Platform.select({
+      ios: () => Bazaar.View,
+      android: () => ReactNative.View,
+      web: () => ReactNative.View
+    })();
+
+
     const options = {
       isSandboxed: isSandboxed,
       featureName: packageInfo.name,
