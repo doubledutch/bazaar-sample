@@ -16,19 +16,6 @@ class HomeView extends Component {
   constructor({ ddOverride }) {
     super()
 
-    if (ddOverride) {
-      DD = ddOverride
-    }
-
-    if (!DD) {
-      // We are not running an a DD environment. Load the shim
-      DD = {
-        currentEvent: { EventId: 'sample-event-id' },
-        setTitle: () => {},
-        requestAccessToken: (callback) => { debugger; return callback(null, 'fake-access-token') }
-      }
-    }
-
     const eventID = isSandboxed ? DD.currentEvent.EventId : ReactNative.Platform.select({
       ios: () => DD.currentEvent.EventId,
       android: () => JSON.parse(DD.currentEvent).EventId,
