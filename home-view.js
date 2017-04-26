@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import ReactNative from 'react-native';
 import Update from 'react-addons-update'
+import DD from './dd-bindings'
 
 const { Alert, TouchableOpacity, Text, View, ScrollView, Image } = ReactNative
 import Bazaar from 'bazaar-client'
 const packageInfo = require('./package.json')
 const bazaarInfo = require('./bazaar.json')
 
-var DD = ReactNative.NativeModules.DDBindings
 var ScreenView = ReactNative.View
 var eventID = ''
-const isSandboxed = false//!(DD && DD.currentEvent)
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const isSandboxed = false
 
 class HomeView extends Component {
   constructor({ ddOverride }) {
