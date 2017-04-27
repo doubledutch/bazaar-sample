@@ -9,9 +9,11 @@ const DD = Platform.select({
   android: () => Object.assign({}, NativeModules.DDBindings, { currentEvent: JSON.parse(NativeModules.DDBindings.currentEvent) })
 })() || {
     openURL: (url) => alert(url),
-    currentEvent: { EventId: '<fill in>'/*'sample-event-id'*/ },
+    currentEvent: { EventId: 'sample-event-id' },
     setTitle: () => { },
     requestAccessToken: (callback) => {
+      return callback(null, 'fake-access-token')
+      
       const token = '<fill in>'
       const secret = '<fill in>'
 
