@@ -16,18 +16,13 @@ class HomeView extends Component {
   constructor({ ddOverride }) {
     super()
 
-    const eventID = isSandboxed ? DD.currentEvent.EventId : ReactNative.Platform.select({
-      ios: () => DD.currentEvent.EventId,
-      android: () => JSON.parse(DD.currentEvent).EventId,
-      web: () => DD.currentEvent.EventId
-    })();
+    const eventID = DD.currentEvent.EventId
 
     const ScreenView = isSandboxed ? ReactNative.View : ReactNative.Platform.select({
       ios: () => Bazaar.View,
       android: () => ReactNative.View,
       web: () => ReactNative.View
-    })();
-
+    })()
 
     const options = {
       isSandboxed: isSandboxed,
@@ -35,6 +30,7 @@ class HomeView extends Component {
       eventID: eventID,
       horizonHost: isSandboxed ? 'localhost:7171' : 'bazaar.doubledutch.me'
     }
+
     this.api = new Bazaar.Client(DD, options)
     this.state = { sampleItems: [] }
   }
@@ -43,11 +39,11 @@ class HomeView extends Component {
     var self = this
 
     this.api.connect().then((user) => {
-      
+
       // TODO: query from a collection on load
-      this.api.fetchUserDocumentsInCollection(collection = 'second_collection', query = null, watch = true).subscribe((results) => {
-        this.setState({ sampleItems: results })
-      })
+      // this.api.fetchUserDocumentsInCollection(collection = 'sample_collection', query = null, watch = true).subscribe((results) => {
+      //   this.setState({ sampleItems: results })
+      // })
     }).catch((err) => {
       debugger
       Alert.alert('Error: ' + err)
@@ -59,13 +55,13 @@ class HomeView extends Component {
   // TODO - implement inserting of a document
   insertSample() {
     const document = { user_id: this.api.getUserID(), name: new Date().getTime(), image_url: 'Something Else....' }
-    this.api.insertIntoCollection('second_collection', document)
+    this.api.insertIntoCollection('sample_collection', document)
   }
 
   // TODO - implement deleting of a document
   deleteSample() {
     if (this.state.sampleItems.length) {
-      this.api.removeFromCollection('second_collection', { id: this.state.sampleItems[0].id })
+      this.api.removeFromCollection('sample_collection', { id: this.state.sampleItems[0].id })
     }
   }
 
@@ -74,20 +70,20 @@ class HomeView extends Component {
     const ids = 'Sample Items: ' + items.map((x) => x.name).join(', ')
     const idStyle = items.length ? null : { height: 0 }
     return (
-      <ScreenView title="" style={{ flex: 1}}>
-        <ScrollView style={ styles.container }>
-          <Image style={ styles.headerImage } resizeMode="contain" source={{ uri: 'https://doubledutch.me/wp-content/uploads/2016/04/doubledutch-logo-300.png' }} />
-          <Text style={ styles.welcome }>{packageInfo.name} ({packageInfo.version})</Text>
-          <Text style={ styles.h1 }>Collections</Text>
+      <ScreenView title="" style={{ flex: 1 }}>
+        <ScrollView style={styles.container}>
+          <Image style={styles.headerImage} resizeMode="contain" source={{ uri: 'https://doubledutch.me/wp-content/uploads/2016/04/doubledutch-logo-300.png' }} />
+          <Text style={styles.welcome}>{packageInfo.name} ({packageInfo.version})</Text>
+          <Text style={styles.h1}>Collections</Text>
           {bazaarInfo.collections.map((c) => (
             <View>
               <Text style={styles.h2}>{c.name}</Text>
-              <Text style={styles.h3}>User Write Access: {c.userWriteAccess ? 'enabled': 'disabled'}</Text>
-              <Text style={styles.h3}>Event Read Access: {c.globalReadAccess ? 'enabled': 'disabled'}</Text>
-              <Text style={styles.h3}>Event Write Access: {c.globalWriteAccess ? 'enabled': 'disabled'}</Text>
+              <Text style={styles.h3}>User Write Access: {c.userWriteAccess ? 'enabled' : 'disabled'}</Text>
+              <Text style={styles.h3}>Event Read Access: {c.globalReadAccess ? 'enabled' : 'disabled'}</Text>
+              <Text style={styles.h3}>Event Write Access: {c.globalWriteAccess ? 'enabled' : 'disabled'}</Text>
             </View>
           ))}
-          <Text style={ styles.h1 }>Data Interactions</Text>
+          <Text style={styles.h1}>Data Interactions</Text>
           <View style={{ opacity: 1 }}>
             <Text>TODO: Check the code for samples</Text>
             <Text style={idStyle}>{ids}</Text>

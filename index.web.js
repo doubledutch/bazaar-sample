@@ -1,8 +1,8 @@
 var React = require('react-native');
 var { AppRegistry } = React;
-import HomeView from './home-view.js'
+import HomeView from './src/home-view.js'
 
-console.error = () => {}
+console.error = () => { }
 console.disableYellowBox = true;
 
 const runApp = (DD) => {

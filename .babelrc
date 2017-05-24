@@ -1,7 +1,7 @@
 {
   "presets": [ "react-native" ],
   "plugins": [
-    ["module-rewrite", { "replaceFunc": "./replace-module-paths.js" }]
+//    ["module-rewrite", { "replaceFunc": "./replace-module-paths.js" }]
   ]
 }
 
