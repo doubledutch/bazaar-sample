@@ -3,22 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "concurrently": "^3.1.0",
-    "react-scripts": "0.8.5"
+    "concurrently": "^3.4.0",
+    "less-watch-compiler": "^1.4.4",
+    "react-scripts": "^1.0.7"
   },
   "dependencies": {
-    "@horizon/client": "^2.0.0",
-    "bazaar-client": "^0.40.22",
-    "less-watch-compiler": "^1.4.2",
-    "lodash": "^4.17.4",
-    "prepack": "^0.1.1",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-addons-css-transition-group": "^15.5.2",
-    "react-addons-shallow-compare": "^15.5.2",
-    "react-addons-update": "^15.4.2",
-    "react-autobind": "^1.0.6",
-    "react-scripts": "^0.8.5"
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
   },
   "scripts": {
     "start": "concurrently \"npm run start-less\" \"react-scripts start\"",
