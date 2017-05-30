@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import ReactNative from 'react-native'
 import CachedImage from 'react-native-cached-image'
-import StackNavigator from 'react-navigation/src/navigators/StackNavigator.js'
-import { NavigationActions } from 'react-navigation'
+import Navigation, { NavigationActions } from 'react-navigation'
 import Horizon from '@horizon/client'
 
 // This is just a set of imports that we want available (at their current version)

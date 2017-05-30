@@ -1,0 +1,109 @@
+{
+  "collections": [
+    {
+      "allowMultipleOwners": true,
+      "description": "messages",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "isUniversalCollection": false,
+      "name": "messages",
+      "userWriteAccess": true
+    },
+    {
+      "allowMultipleOwners": true,
+      "description": "groups",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "isUniversalCollection": false,
+      "name": "groups",
+      "userWriteAccess": true
+    },
+    {
+      "allowMultipleOwners": true,
+      "description": "assignments",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "isUniversalCollection": false,
+      "name": "assignments",
+      "userWriteAccess": false
+    },
+    {
+      "allowMultipleOwners": false,
+      "description": "users",
+      "globalReadAccess": true,
+      "globalWriteAccess": false,
+      "isUniversalCollection": false,
+      "name": "users",
+      "userWriteAccess": false
+    },
+    {
+      "allowMultipleOwners": true,
+      "description": "Contacts with notes/SFDC data/whatever else",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "isUniversalCollection": false,
+      "name": "contacts",
+      "userWriteAccess": false
+    },
+    {
+      "allowMultipleOwners": false,
+      "description": "Polls created to send to attendees",
+      "globalReadAccess": true,
+      "globalWriteAccess": false,
+      "isUniversalCollection": false,
+      "name": "polls",
+      "userWriteAccess": false
+    },
+    {
+      "description": "metrics",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "isUniversalCollection": true,
+      "name": "metrics",
+      "userWriteAccess": true
+    },
+    {
+      "description": "accounts",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "name": "accounts",
+      "userWriteAccess": false
+    },
+    {
+      "description": "opportunities",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "name": "opportunities",
+      "userWriteAccess": false
+    },
+    {
+      "description": "stages",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "name": "stages",
+      "userWriteAccess": false
+    },
+    {
+      "description": "owners",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "name": "owners",
+      "userWriteAccess": false
+    },
+    {
+      "description": "event_info",
+      "globalReadAccess": false,
+      "globalWriteAccess": false,
+      "name": "event_info",
+      "userWriteAccess": false
+    }
+  ],
+  "description": "Description for concierge",
+  "developer": {
+    "email": "nclark@doubledutch.me",
+    "name": "",
+    "phone": ""
+  },
+  "id": "1e2bd1ad-f121-4c75-af1c-b320675cc875",
+  "name": "concierge"
+}
