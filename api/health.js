@@ -1,5 +1,7 @@
-function run(req, rsp) {
+const bazaar = require('../bazaar.json')
+
+module.exports = function run(req, rsp) {
     rsp.write(JSON.stringify(
-        { status: 'OK' }
+        bazaar
     ))
 }

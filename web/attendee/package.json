@@ -18,6 +18,6 @@
     "eject": "react-scripts eject",
     "start-less": "node_modules/less-watch-compiler/less-watch-compiler.js style/ public/style/ index.less",
     "build-less": "lessc style/index.less -x build/static/css/index.css",
-    "build-static": "cp public/static/* build/static/"
+    "build-static": "cp public/static/* build/static/ | true"
   }
 }
