@@ -6,8 +6,8 @@ console.error = () => { }
 console.disableYellowBox = true;
 
 const runApp = (DD) => {
-  AppRegistry.registerComponent('scavenger_hunt', () => HomeView);
-  AppRegistry.runApplication('scavenger_hunt', {
+  AppRegistry.registerComponent('bazaar_sample', () => HomeView);
+  AppRegistry.runApplication('bazaar_sample', {
     rootTag: document.getElementById('react-root'),
     initialProps: { ddOverride: DD }
   })

@@ -8,8 +8,6 @@ import Bazaar from 'bazaar-client'
 const packageInfo = require('../package.json')
 const bazaarInfo = require('../bazaar.json')
 
-import ScavengerPlanView from './scavenger-plan.js'
-
 var ScreenView = ReactNative.View
 var eventID = ''
 const isSandboxed = false
@@ -34,21 +32,12 @@ class HomeView extends Component {
     }
 
     this.api = new Bazaar.Client(DD, options)
-    this.state = { currentLevel:0,levels:[
-        {id:6,color:"#55AAFF",title:'Docs',recordTime:-1,recordUser:null,myTime:-1,description:"Where the memories live",type:'code',answer:'r2d2'},
-        {id:5,color:"#55FFFF",title:'Parkside',recordTime:-1,recordUser:null,myTime:-1,description:"Where the chicken sandwich rules",type:'code',answer:'r2d2'},
-        {id:4,color:"#55FFAA",title:'Whole Foods',recordTime:11,recordUser:'Anonymous',myTime:-1,description:"Where the lazy lunch lives",type:'code',answer:'r2d2'},
-        {id:3,color:"#AAFF55",title:'Marketing',recordTime:4,recordUser:'Six Pence Six Pack',myTime:-1,description:"Where the bugs are featured",type:'code',answer:'r2d2'},
-        {id:2,color:"#FFFF55",title:'Engineering',recordTime:61,recordUser:'Lady Ada',myTime:-1,description:"Where the bugs are fabricated",type:'code',answer:'r2d2'},
-        {id:1,color:"#FFAA55",title:'Kitchen',recordTime:18,recordUser:'Mr.Mister',myTime:-1,description:"Where the dirty dishes go",type:'code',answer:'r2d2'},
-        {id:0,color:"#FF0055",title:'All Hands',recordTime:23,recordUser:'Dr.McNinja',myTime:-1,description:"So much all hands",type:'code',answer:'r2d2'}
-
-      ]}
+    this.state = { sampleItems: [] }
   }
 
   componentDidMount() {
     var self = this
-/*
+
     this.api.connect().then((user) => {
 
       // TODO: query from a collection on load
@@ -59,7 +48,7 @@ class HomeView extends Component {
       debugger
       Alert.alert('Error: ' + err)
     })
-*/
+
     DD.setTitle(`${packageInfo.name}`)
   }
 
@@ -76,34 +65,35 @@ class HomeView extends Component {
     }
   }
 
-  completeTask(id,time){
-    var currentLevel=this.state.currentLevel
-    if(currentLevel<=id)currentLevel=id+1
-    var levels=[]
-    for(var i=0;i<this.state.levels.length;i++){
-      var level=this.state.levels[i]
-      if(level.id==id){
-        var userTime=42
-        level=Object.assign({},level,{myTime:time})
-        levels.push(level)
-      }else{
-        levels.push(level)
-      }
-    }
-    this.setState(Object.assign({},this.state,{currentLevel:currentLevel,levels:levels}))
-    console.log("the user finished "+id+" in "+time)
-  }
-
   render() {
     const items = (this.state.sampleItems || [])
-    const ids = 'Sample Items:' + items.map((x) => x.name).join(', ')
+    const ids = 'Sample Items: ' + items.map((x) => x.name).join(', ')
     const idStyle = items.length ? null : { height: 0 }
-
-
     return (
       <ScreenView title="" style={{ flex: 1 }}>
         <ScrollView style={styles.container}>
-          <ScavengerPlanView  completeTask={this.completeTask.bind(this)} {...this.state}></ScavengerPlanView>
+          <Image style={styles.headerImage} resizeMode="contain" source={{ uri: 'https://doubledutch.me/wp-content/uploads/2016/04/doubledutch-logo-300.png' }} />
+          <Text style={styles.welcome}>{packageInfo.name} ({packageInfo.version})</Text>
+          <Text style={styles.h1}>Collections</Text>
+          {bazaarInfo.collections.map((c) => (
+            <View>
+              <Text style={styles.h2}>{c.name}</Text>
+              <Text style={styles.h3}>User Write Access: {c.userWriteAccess ? 'enabled' : 'disabled'}</Text>
+              <Text style={styles.h3}>Event Read Access: {c.globalReadAccess ? 'enabled' : 'disabled'}</Text>
+              <Text style={styles.h3}>Event Write Access: {c.globalWriteAccess ? 'enabled' : 'disabled'}</Text>
+            </View>
+          ))}
+          <Text style={styles.h1}>Data Interactions</Text>
+          <View style={{ opacity: 1 }}>
+            <Text>TODO: Check the code for samples</Text>
+            <Text style={idStyle}>{ids}</Text>
+            <TouchableOpacity onPress={this.insertSample.bind(this)} style={{ padding: 5, backgroundColor: 'blue', margin: 10 }}>
+              <Text style={{ color: 'white' }}>Insert item into list</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.deleteSample.bind(this)} style={{ padding: 5, backgroundColor: 'red', margin: 10 }}>
+              <Text style={{ color: 'white' }}>Delete item list</Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       </ScreenView>
     )

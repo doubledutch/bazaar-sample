@@ -4,4 +4,4 @@ import HomeView from './src/home-view.js'
 
 console.error = () => { }
 console.disableYellowBox = true;
-AppRegistry.registerComponent('scavenger_hunt', () => HomeView);
+AppRegistry.registerComponent('bazaar_sample', () => HomeView);
