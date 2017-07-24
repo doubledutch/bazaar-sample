@@ -16,9 +16,9 @@ class HomeView extends Component {
   constructor({ ddOverride }) {
     super()
 
-    const eventID = DD.currentEvent.EventId
+    eventID = DD.currentEvent.EventId
 
-    const ScreenView = isSandboxed ? ReactNative.View : ReactNative.Platform.select({
+    ScreenView = isSandboxed ? ReactNative.View : ReactNative.Platform.select({
       ios: () => Bazaar.View,
       android: () => ReactNative.View,
       web: () => ReactNative.View
