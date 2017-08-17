@@ -8,21 +8,15 @@ import Bazaar from 'bazaar-client'
 const packageInfo = require('../package.json')
 const bazaarInfo = require('../bazaar.json')
 
-var ScreenView = ReactNative.View
 var eventID = ''
 const isSandboxed = false
 
 class HomeView extends Component {
-  constructor({ ddOverride }) {
+  constructor() {
     super()
 
     eventID = DD.currentEvent.EventId
 
-    ScreenView = isSandboxed ? ReactNative.View : ReactNative.Platform.select({
-      ios: () => Bazaar.View,
-      android: () => ReactNative.View,
-      web: () => ReactNative.View
-    })()
 
     const options = {
       isSandboxed: isSandboxed,
@@ -41,9 +35,9 @@ class HomeView extends Component {
     this.api.connect().then((user) => {
 
       // TODO: query from a collection on load
-      // this.api.fetchUserDocumentsInCollection(collection = 'sample_collection', query = null, watch = true).subscribe((results) => {
-      //   this.setState({ sampleItems: results })
-      // })
+      this.api.fetchUserDocumentsInCollection(collection = 'sample_collection', query = null, watch = true).subscribe((results) => {
+        this.setState({ sampleItems: results })
+      })
     }).catch((err) => {
       debugger
       Alert.alert('Error: ' + err)
@@ -70,7 +64,7 @@ class HomeView extends Component {
     const ids = 'Sample Items: ' + items.map((x) => x.name).join(', ')
     const idStyle = items.length ? null : { height: 0 }
     return (
-      <ScreenView title="" style={{ flex: 1 }}>
+      <View title="" style={{ flex: 1 }}>
         <ScrollView style={styles.container}>
           <Image style={styles.headerImage} resizeMode="contain" source={{ uri: 'https://doubledutch.me/wp-content/uploads/2016/04/doubledutch-logo-300.png' }} />
           <Text style={styles.welcome}>{packageInfo.name} ({packageInfo.version})</Text>
@@ -95,7 +89,7 @@ class HomeView extends Component {
             </TouchableOpacity>
           </View>
         </ScrollView>
-      </ScreenView>
+      </View>
     )
   }
 }
